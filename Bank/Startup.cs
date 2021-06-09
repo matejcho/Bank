@@ -2,6 +2,8 @@ using AutoMapper;
 using Bank.Data;
 using Bank.Infrastructure;
 using Bank.Models.Profiles;
+using Bank.Services.Abstractions;
+using Bank.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,7 +55,12 @@ namespace Bank
                 cfg.AddMaps(typeof(AccountProfile));
             }).CreateMapper();
 
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IClientService, ClientService>();
+
             services.AddSingleton(mapper);
+
 
             services.AddSwaggerGen(c =>
             {
